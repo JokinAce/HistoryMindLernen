@@ -1,0 +1,8 @@
+﻿https://colorhunt.co/palette/222831393e46ffd369eeeeee
+Farben
+
+1. Basic funktion
+   - Neuer Begriff wählt einen Begriff vom History Mind YES
+   - Auflösung zeigt den originele Antwort vom History Mind YES
+   - Auflösung soll Fehler zeigen YES
+   - HistoryMind DB fertig
