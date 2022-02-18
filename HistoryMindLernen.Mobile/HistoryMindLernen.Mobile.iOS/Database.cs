@@ -1,27 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
-using Xamarin.Forms;
-using Dapper;
+﻿// This file is part of the HistoryMindLernen Project
+//
+// Copyright (C) 2022
+//
+// “Commons Clause” License Condition v1.0
+// The Software is provided to you by the Licensor under the License, as defined below, subject to the following condition.
+//
+// Without limiting other conditions in the License, the grant of rights under the License will not include,
+// and the License does not grant to you,the right to Sell the Software.
+// For purposes of the foregoing, “Sell” means practicing any or all of the rights granted to you under the License to provide to third parties,
+// for a fee or other consideration (including without limitation fees for hosting or consulting/ support services related to the Software),
+// a product or service whose value derives, entirely or substantially, from the functionality of the Software.
+//
+// Any license notice or attribution required by the License must also include this Commons Clause License Condition notice.
+//
+// Software: HistoryMindLernen
+// License: AGPL v3.0
+// Licensor: Frantisek Pis
+
+using Foundation;
 using HistoryMindLernen.Mobile.Database;
 using HistoryMindLernen.Mobile.Droid;
-using Foundation;
+using Microsoft.Data.Sqlite;
+using System;
+using System.IO;
+using Xamarin.Forms;
 
 [assembly: Dependency(typeof(Database))]
-namespace HistoryMindLernen.Mobile.Droid {
 
-    public class Database : ISQLite {
-
-        SqliteConnection ISQLite.GetConnection() {
-
+namespace HistoryMindLernen.Mobile.Droid
+{
+    public class Database : ISQLite
+    {
+        SqliteConnection ISQLite.GetConnection()
+        {
             const string databaseName = "HistoryMind.db";
             string dbFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string dbFile = Path.Combine(dbFolder, databaseName);
-            if (!File.Exists(dbFile)) {
+            if (!File.Exists(dbFile))
+            {
                 string existingDb = NSBundle.MainBundle.PathForResource("MyLite", "db");
                 File.Copy(existingDb, dbFile);
             }

@@ -1,5 +1,23 @@
+// This file is part of the HistoryMindLernen Project
+//
+// Copyright (C) 2022
+//
+// “Commons Clause” License Condition v1.0
+// The Software is provided to you by the Licensor under the License, as defined below, subject to the following condition.
+//
+// Without limiting other conditions in the License, the grant of rights under the License will not include,
+// and the License does not grant to you,the right to Sell the Software.
+// For purposes of the foregoing, “Sell” means practicing any or all of the rights granted to you under the License to provide to third parties,
+// for a fee or other consideration (including without limitation fees for hosting or consulting/ support services related to the Software),
+// a product or service whose value derives, entirely or substantially, from the functionality of the Software.
+//
+// Any license notice or attribution required by the License must also include this Commons Clause License Condition notice.
+//
+// Software: HistoryMindLernen
+// License: AGPL v3.0
+// Licensor: Frantisek Pis
+
 using HistoryMindLernen.Database;
-using System.Speech.Recognition;
 
 namespace HistoryMindLernen
 {
@@ -12,168 +30,217 @@ namespace HistoryMindLernen
 
         public Form()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
-        private void AddPunkt() {
-            this.Punkte += 1;
-            this.PunkteLabel.Text = $"Punkte: {Punkte}/6";
+        private void AddPunkt()
+        {
+            Punkte += 1;
+            PunkteLabel.Text = $"Punkte: {Punkte}/6";
         }
 
-        private void ClearPunkt() {
-            this.PunkteLabel.Text = $"Punkte: 0/6";
+        private void ClearPunkt()
+        {
+            PunkteLabel.Text = $"Punkte: 0/6";
             Punkte = 0;
         }
 
-        private void SchiebBegriffe() {
-            this.Begriff = this.Begriffe.ElementAt(Begriffe.Count - 1);
-            this.Begriffe.Remove(this.Begriff);
+        private void SchiebBegriffe()
+        {
+            Begriff = Begriffe.ElementAt(Begriffe.Count - 1);
+            Begriffe.Remove(Begriff);
         }
 
-        private bool CheckBegriffe() {
-            if (this.Begriffe.Count == 0) {
-                this.AuflösungKnopf.Visible = false;
-                this.KorregierenKnopf.Visible = false;
-                this.PunkteLabel.Visible = false;
+        private bool CheckBegriffe()
+        {
+            if (Begriffe.Count == 0)
+            {
+                AuflösungKnopf.Visible = false;
+                KorregierenKnopf.Visible = false;
+                PunkteLabel.Visible = false;
 
-                this.ErklärungTextBox.Text = $"Note: {6 - Punkte}";
+                ErklärungTextBox.Text = $"Note: {6 - Punkte}";
                 ClearPunkt();
-                this.HistoryMindGroupBox.Visible = true;
+                HistoryMindGroupBox.Visible = true;
 
                 return false;
             }
             return true;
         }
 
-        private void LoadBegriffe() {
+        private void LoadBegriffe()
+        {
             Controller controller = Controller.GetInstance();
-            (bool, bool, bool) HistoryMinds = (this.HistoryMindCheckBox.Checked, this.HistoryMind2CheckBox.Checked, this.HistoryMind3CheckBox.Checked);
+            (bool, bool, bool) HistoryMinds = (HistoryMindCheckBox.Checked, HistoryMind2CheckBox.Checked, HistoryMind3CheckBox.Checked);
 
-            for (int i = 0; i != 6; i++) {
+            for (int i = 0; i != 6; i++)
+            {
                 Controller.HistoryMindResult tempResult = controller.RandomHistoryMind(HistoryMinds.Item1, HistoryMinds.Item2, HistoryMinds.Item3);
 
-                while (this.Begriffe.Contains(tempResult)) {
+                while (Begriffe.Contains(tempResult))
+                {
                     tempResult = controller.RandomHistoryMind(HistoryMinds.Item1, HistoryMinds.Item2, HistoryMinds.Item3);
                 }
 
-                this.Begriffe.Add(tempResult);
+                Begriffe.Add(tempResult);
             }
         }
 
-        private void HistoryMindCheckBox_CheckedChanged(object sender, EventArgs e) {
-            if (!this.HistoryMindCheckBox.Checked && !this.HistoryMind2CheckBox.Checked && !this.HistoryMind3CheckBox.Checked)
-                this.HistoryMindCheckBox.Checked = true;
+        private void HistoryMindCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!HistoryMindCheckBox.Checked && !HistoryMind2CheckBox.Checked && !HistoryMind3CheckBox.Checked)
+            {
+                HistoryMindCheckBox.Checked = true;
+            }
         }
 
-        private void StartRounde() {
-            if (!this.KorregierenKnopf.Visible)
-                this.KorregierenKnopf.Visible = true;
-            if (!this.AuflösungKnopf.Visible)
-                this.AuflösungKnopf.Visible = true;
-            if (!this.PunkteLabel.Visible)
-                this.PunkteLabel.Visible = true;
-            if (this.Begriffe.Count == 0)
-                this.LoadBegriffe();
-            if (this.HistoryMindGroupBox.Visible)
-                this.HistoryMindGroupBox.Visible = false; 
+        private void StartRounde()
+        {
+            if (!KorregierenKnopf.Visible)
+            {
+                KorregierenKnopf.Visible = true;
+            }
+
+            if (!AuflösungKnopf.Visible)
+            {
+                AuflösungKnopf.Visible = true;
+            }
+
+            if (!PunkteLabel.Visible)
+            {
+                PunkteLabel.Visible = true;
+            }
+
+            if (Begriffe.Count == 0)
+            {
+                LoadBegriffe();
+            }
+
+            if (HistoryMindGroupBox.Visible)
+            {
+                HistoryMindGroupBox.Visible = false;
+            }
         }
 
-        private void NeuerBegriffKnopf_Click(object sender, EventArgs e) {
+        private void NeuerBegriffKnopf_Click(object sender, EventArgs e)
+        {
             StartRounde();
 
-            this.ErklärungTextBox.Text = null;
-            this.SchiebBegriffe();
+            ErklärungTextBox.Text = null;
+            SchiebBegriffe();
 
-            if (this.CheckBegriffe()) {
-                this.BegriffLabel.Text = this.Begriff!.Begriff;
-                this.NeuerBegriffKnopf.Text = "Skip Begriff";
-            } else {
-                this.BegriffLabel.Text = "Drücke \"Neuer Begriff\" um zu starten";
-                this.NeuerBegriffKnopf.Text = "Neuer Begriff";
+            if (CheckBegriffe())
+            {
+                BegriffLabel.Text = Begriff!.Begriff;
+                NeuerBegriffKnopf.Text = "Skip Begriff";
+            }
+            else
+            {
+                BegriffLabel.Text = "Drücke \"Neuer Begriff\" um zu starten";
+                NeuerBegriffKnopf.Text = "Neuer Begriff";
             }
         }
 
-        private void AuflösungKnopf_Click(object sender, EventArgs e) {
-            this.KorregierenKnopf.Visible = false;
-            this.AuflösungKnopf.Visible = false;
-            this.NeuerBegriffKnopf.Text = "Neuer Begriff";
+        private void AuflösungKnopf_Click(object sender, EventArgs e)
+        {
+            KorregierenKnopf.Visible = false;
+            AuflösungKnopf.Visible = false;
+            NeuerBegriffKnopf.Text = "Neuer Begriff";
 
-            int confident = DamerauLevenshtein(this.Begriff!.Erklärung, this.ErklärungTextBox.Text);
+            int confident = DamerauLevenshtein(Begriff!.Erklärung, ErklärungTextBox.Text);
 
-            if (confident >= 50) {
-                this.ErklärungTextBox.Text = @$"War nicht so korrekt, Confidence: {confident}%
-{this.ErklärungTextBox.Text}
-
-Erwartete Erklärung
-{this.Begriff.Erklärung}";
-            } else {
-                this.ErklärungTextBox.Text = @$"Joa passt, Confidence: {confident}%
-{this.ErklärungTextBox.Text}
+            if (confident >= 50)
+            {
+                ErklärungTextBox.Text = @$"War nicht so korrekt, Confidence: {confident}%
+{ErklärungTextBox.Text}
 
 Erwartete Erklärung
-{this.Begriff!.Erklärung}";
-                this.AddPunkt();
+{Begriff.Erklärung}";
+            }
+            else
+            {
+                ErklärungTextBox.Text = @$"Joa passt, Confidence: {confident}%
+{ErklärungTextBox.Text}
+
+Erwartete Erklärung
+{Begriff!.Erklärung}";
+                AddPunkt();
             }
 
-            this.ErklärungTextBox.Find("Erwartete Erklärung");
-            this.ErklärungTextBox.SelectionColor = Color.Yellow;
+            ErklärungTextBox.Find("Erwartete Erklärung");
+            ErklärungTextBox.SelectionColor = Color.Yellow;
 
-            this.CheckBegriffe();
+            CheckBegriffe();
         }
 
-        private void KorregierenKnopf_MouseDown(object sender, MouseEventArgs e) {
-            PrevText = this.ErklärungTextBox.Text;
+        private void KorregierenKnopf_MouseDown(object sender, MouseEventArgs e)
+        {
+            PrevText = ErklärungTextBox.Text;
 
-            string differenz = Difference(this.Begriff!.Erklärung, this.ErklärungTextBox.Text)[..(this.ErklärungTextBox.Text.Length > this.Begriff.Erklärung.Length ? this.Begriff.Erklärung.Length : this.ErklärungTextBox.Text.Length)];
+            string differenz = Difference(Begriff!.Erklärung, ErklärungTextBox.Text)[..(ErklärungTextBox.Text.Length > Begriff.Erklärung.Length ? Begriff.Erklärung.Length : ErklärungTextBox.Text.Length)];
 
-            this.ErklärungTextBox.Text = @$"{this.ErklärungTextBox.Text}
+            ErklärungTextBox.Text = @$"{ErklärungTextBox.Text}
 {differenz}";
 
-            this.ErklärungTextBox.Find(differenz, RichTextBoxFinds.MatchCase);
-            this.ErklärungTextBox.SelectionColor = Color.Yellow;
+            ErklärungTextBox.Find(differenz, RichTextBoxFinds.MatchCase);
+            ErklärungTextBox.SelectionColor = Color.Yellow;
         }
 
-        private void KorregierenKnopf_MouseUp(object sender, MouseEventArgs e) {
-            this.ErklärungTextBox.Text = PrevText;
+        private void KorregierenKnopf_MouseUp(object sender, MouseEventArgs e)
+        {
+            ErklärungTextBox.Text = PrevText;
         }
 
-        public static string Difference(string str1, string str2) {
-            if (str1 == null) {
+        public static string Difference(string str1, string str2)
+        {
+            if (str1 == null)
+            {
                 return str2;
             }
-            else if (str2 == null) {
+            else if (str2 == null)
+            {
                 return str1;
             }
 
             List<string> set1 = str1.Split(' ').Distinct().ToList();
             List<string> set2 = str2.Split(' ').Distinct().ToList();
 
-            var diff = set2.Count > set1.Count ? set2.Except(set1).ToList() : set1.Except(set2).ToList();
+            List<string>? diff = set2.Count > set1.Count ? set2.Except(set1).ToList() : set1.Except(set2).ToList();
 
             return string.Join(" ", diff);
         }
 
-        public static int DamerauLevenshtein(string original, string modified) {
+        public static int DamerauLevenshtein(string original, string modified)
+        {
             int len_orig = original.Length;
             int len_diff = modified.Length;
 
-            var matrix = new int[len_orig + 1, len_diff + 1];
+            int[,]? matrix = new int[len_orig + 1, len_diff + 1];
             for (int i = 0; i <= len_orig; i++)
+            {
                 matrix[i, 0] = i;
-            for (int j = 0; j <= len_diff; j++)
-                matrix[0, j] = j;
+            }
 
-            for (int i = 1; i <= len_orig; i++) {
-                for (int j = 1; j <= len_diff; j++) {
+            for (int j = 0; j <= len_diff; j++)
+            {
+                matrix[0, j] = j;
+            }
+
+            for (int i = 1; i <= len_orig; i++)
+            {
+                for (int j = 1; j <= len_diff; j++)
+                {
                     int cost = modified[j - 1] == original[i - 1] ? 0 : 1;
-                    var vals = new int[] {
+                    int[]? vals = new int[] {
                     matrix[i - 1, j] + 1,
                     matrix[i, j - 1] + 1,
                     matrix[i - 1, j - 1] + cost
                 };
                     matrix[i, j] = vals.Min();
                     if (i > 1 && j > 1 && original[i - 1] == modified[j - 2] && original[i - 2] == modified[j - 1])
+                    {
                         matrix[i, j] = Math.Min(matrix[i, j], matrix[i - 2, j - 2] + cost);
+                    }
                 }
             }
             return matrix[len_orig, len_diff];
@@ -216,7 +283,7 @@ Erwartete Erklärung
 
         //        for (i = 1; i <= n; i++) {
         //            int cost = s[i - 1] == tJ ? 0 : 1; // cost
-        //                                               // minimum of cell to the left+1, to the top+1, diagonally left and up +cost                
+        //                                               // minimum of cell to the left+1, to the top+1, diagonally left and up +cost
         //            d[i] = Math.Min(Math.Min(d[i - 1] + 1, p[i] + 1), p[i - 1] + cost);
         //        }
 
@@ -226,7 +293,7 @@ Erwartete Erklärung
         //        d = dPlaceholder;
         //    }
 
-        //    // our last action in the above loop was to switch d and p, so p now 
+        //    // our last action in the above loop was to switch d and p, so p now
         //    // actually has the most recent cost counts
         //    return p[n];
         //}

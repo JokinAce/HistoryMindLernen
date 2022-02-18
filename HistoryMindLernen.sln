@@ -13,6 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HistoryMindLernen.Mobile", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FE83CFCB-834F-4BE4-A75A-7BA798564D94}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		HistoryMind.db = HistoryMind.db
 	EndProjectSection
 EndProject

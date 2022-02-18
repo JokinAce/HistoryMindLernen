@@ -1,21 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:mobile="clr-namespace:HistoryMindLernen.Mobile" x:DataType="mobile:MainViewModel"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mobile="clr-namespace:HistoryMindLernen.Mobile"
+             x:DataType="mobile:MainViewModel"
              x:Class="HistoryMindLernen.Mobile.MainPage"
-             BackgroundColor="#222831"
-             >
+             BackgroundColor="#222831">
 
     <StackLayout>
-        <Label x:Name="BegriffLabel" Text="Drücke &quot;Neuer Begriff&quot; um zu starten" FontSize="20" Padding="30,40,10,10"/>
-        <AbsoluteLayout Padding="30,50,10,10" >
-            <Editor x:Name="ErklärungTextBox" WidthRequest="350" HeightRequest="200" TextColor="#EEEEEE" BackgroundColor="#393E46"/>
+        <Label x:Name="BegriffLabel" Text="Drücke &quot;Neuer Begriff&quot; um zu starten" FontSize="20" Padding="30,40,10,10" />
+        <AbsoluteLayout Padding="30,50,10,10">
+            <Editor x:Name="ErklärungTextBox" WidthRequest="350" HeightRequest="200" TextColor="#EEEEEE" BackgroundColor="#393E46" />
         </AbsoluteLayout>
         <StackLayout Padding="30,10" Orientation="Horizontal">
-            <Button x:Name="NeuerBegriffKnopf" FontSize="11" Padding="12,5" BackgroundColor="#393E46" Text="Neuer Begriff" TextColor="#EEEEEE" Clicked="NeuerBegriff_Clicked"/>
-            <Button x:Name="KorregierenKnopf" IsVisible="False" FontSize="11" Padding="9,5" BackgroundColor="#393E46" Text="Korrektur (Hilfe)" TextColor="#EEEEEE" Released="Korrektur_Released" Pressed="Korrektur_Pressed"/>
-            <Button x:Name="AuflösungKnopf" IsVisible="False" FontSize="11" Padding="12,5" BackgroundColor="#393E46" Text="Auflösung" TextColor="#EEEEEE" Clicked="Auflösung_Clicked"/>
+            <Button x:Name="NeuerBegriffKnopf" FontSize="11" Padding="12,5" BackgroundColor="#393E46" Text="Neuer Begriff" TextColor="#EEEEEE" Clicked="NeuerBegriff_Clicked" />
+            <Button x:Name="KorregierenKnopf" IsVisible="False" FontSize="11" Padding="9,5" BackgroundColor="#393E46" Text="Korrektur (Hilfe)" TextColor="#EEEEEE" Released="Korrektur_Released" Pressed="Korrektur_Pressed" />
+            <Button x:Name="AuflösungKnopf" IsVisible="False" FontSize="11" Padding="12,5" BackgroundColor="#393E46" Text="Auflösung" TextColor="#EEEEEE" Clicked="Auflösung_Clicked" />
         </StackLayout>
-        <Label x:Name="PunkteLabel" Text="Punkte: 0/6" Padding="30,30" FontSize="Large" FontAttributes="Bold"/>
+        <Label x:Name="PunkteLabel" Text="Punkte: 0/6" Padding="30,30" FontSize="Large" FontAttributes="Bold" />
         <Frame x:Name="HistoryMindGroupBox" HasShadow="True" IsClippedToBounds="True"  CornerRadius="50" BackgroundColor="#393E46" Padding="0,10">
             <Grid VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand">
                 <Grid.RowDefinitions>
@@ -32,17 +33,16 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox x:Name="HistoryMindCheckBox" CheckedChanged="CheckBox_CheckedChanged" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" IsChecked="true" Color="#FFD369"/>
+                <CheckBox x:Name="HistoryMindCheckBox" CheckedChanged="CheckBox_CheckedChanged" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" IsChecked="true" Color="#FFD369" />
                 <Label Grid.Row="1" Grid.Column="2" Text="History Mind 1" VerticalOptions="Center" />
 
-                <CheckBox x:Name="HistoryMind2CheckBox" CheckedChanged="CheckBox_CheckedChanged" Grid.Row="2" Grid.Column="1" VerticalOptions="Center" IsChecked="true" Color="#FFD369"/>
-                <Label Grid.Row="2" Grid.Column="2" Text="History Mind 2" VerticalOptions="Center"/>
+                <CheckBox x:Name="HistoryMind2CheckBox" CheckedChanged="CheckBox_CheckedChanged" Grid.Row="2" Grid.Column="1" VerticalOptions="Center" IsChecked="true" Color="#FFD369" />
+                <Label Grid.Row="2" Grid.Column="2" Text="History Mind 2" VerticalOptions="Center" />
 
-                <CheckBox x:Name="HistoryMind3CheckBox" CheckedChanged="CheckBox_CheckedChanged" Grid.Row="3" Grid.Column="1" VerticalOptions="Center" IsChecked="true" Color="#FFD369"/>
-                <Label Grid.Row="3" Grid.Column="2" Text="History Mind 3" VerticalOptions="Center"/>
+                <CheckBox x:Name="HistoryMind3CheckBox" CheckedChanged="CheckBox_CheckedChanged" Grid.Row="3" Grid.Column="1" VerticalOptions="Center" IsChecked="true" Color="#FFD369" />
+                <Label Grid.Row="3" Grid.Column="2" Text="History Mind 3" VerticalOptions="Center" />
             </Grid>
         </Frame>
-        <Label Text="BETA | Ansicht und Features können sich in Zukunft ändern" Padding="100,100,0,0" FontSize="Micro" FontAttributes="Bold"/>
+        <Label Text="BETA | Ansicht und Features können sich in Zukunft ändern" Padding="100,100,0,0" FontSize="Micro" FontAttributes="Bold" />
     </StackLayout>
-
 </ContentPage>
