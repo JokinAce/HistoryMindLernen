@@ -60,12 +60,10 @@ namespace HistoryMindLernen.Mobile
         {
             PrevText = ErklärungTextBox.Text;
 
-            if (ErklärungTextBox.Text.Length > Begriff.Erklärung.Length)
-            {
-            }
+            int erklärungtextLength = ErklärungTextBox.Text?.Length ?? 0;
 
             string differenz = Difference(Begriff.Erklärung, ErklärungTextBox.Text).Substring(0,
-                (ErklärungTextBox.Text?.Length ?? 0) > Begriff.Erklärung.Length ? Begriff.Erklärung.Length : ErklärungTextBox.Text.Length);
+                erklärungtextLength > Begriff.Erklärung.Length ? Begriff.Erklärung.Length : erklärungtextLength);
             // What the fuck is this code? (If user types longer string then the original, substring fails fix)
 
             ErklärungTextBox.Text = $@"{ErklärungTextBox.Text}
@@ -85,7 +83,7 @@ namespace HistoryMindLernen.Mobile
 
             int confident = DamerauLevenshtein(Begriff.Erklärung, ErklärungTextBox.Text ?? string.Empty);
 
-            if (confident >= 50)
+            if (confident >= (Begriff.Erklärung.Length / 2))
             {
                 ErklärungTextBox.Text = $@"War nicht so korrekt, Confidence: {confident}%
 {ErklärungTextBox.Text}
