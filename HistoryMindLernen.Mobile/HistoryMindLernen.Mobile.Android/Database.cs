@@ -35,11 +35,8 @@ namespace HistoryMindLernen.Mobile.Droid
             string docFolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             string dbFile = Path.Combine(docFolder, databaseName); // FILE NAME TO USE WHEN COPIED
 
-            if (!File.Exists(dbFile))
-            {
-                FileStream writeStream = new FileStream(dbFile, FileMode.OpenOrCreate, FileAccess.Write);
-                Android.App.Application.Context.Assets.Open(databaseName).CopyTo(writeStream);
-            }
+            FileStream writeStream = new FileStream(dbFile, FileMode.OpenOrCreate, FileAccess.Write);
+            Android.App.Application.Context.Assets.Open(databaseName).CopyTo(writeStream);
 
             return new SqliteConnection($@"Data Source={dbFile};Mode=ReadOnly;");
         }
