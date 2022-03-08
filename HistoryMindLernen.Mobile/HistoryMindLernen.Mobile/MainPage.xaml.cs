@@ -31,10 +31,33 @@ namespace HistoryMindLernen.Mobile
         private Controller.HistoryMindResult Begriff { get; set; }
         private int Punkte { get; set; } = 0;
         private string PrevText { get; set; }
+        private TapGestureRecognizer HistoryMindTextTap { get; set; }
 
         public MainPage()
         {
             InitializeComponent();
+
+            HistoryMindTextTap = new TapGestureRecognizer();
+            HistoryMindTextTap.Tapped += HistoryMindTextTap_Tapped;
+
+            HistoryMind1Text.GestureRecognizers.Add(HistoryMindTextTap);
+            HistoryMind2Text.GestureRecognizers.Add(HistoryMindTextTap);
+            HistoryMind3Text.GestureRecognizers.Add(HistoryMindTextTap);
+        }
+
+        private void HistoryMindTextTap_Tapped(object sender, EventArgs e)
+        {
+            if (((Label)sender).Text == "History Mind 1")
+            {
+                this.HistoryMindCheckBox.IsChecked = !this.HistoryMindCheckBox.IsChecked;
+            } else if (((Label)sender).Text == "History Mind 2")
+            {
+                this.HistoryMind2CheckBox.IsChecked = !this.HistoryMind2CheckBox.IsChecked;
+            } else if (((Label)sender).Text == "History Mind 3")
+            {
+                this.HistoryMind3CheckBox.IsChecked = !this.HistoryMind3CheckBox.IsChecked;
+            }
+            this.CheckBox_CheckedChanged(sender, new CheckedChangedEventArgs(true));
         }
 
         private void NeuerBegriff_Clicked(object sender, EventArgs e)
@@ -62,8 +85,7 @@ namespace HistoryMindLernen.Mobile
 
             int erklärungtextLength = ErklärungTextBox.Text?.Length ?? 0;
 
-            string differenz = Difference(Begriff.Erklärung, ErklärungTextBox.Text).Substring(0,
-                erklärungtextLength > Begriff.Erklärung.Length ? Begriff.Erklärung.Length : erklärungtextLength);
+            string differenz = Difference(erklärungtextLength >= Begriff.Erklärung.Length ? Begriff.Erklärung : Begriff.Erklärung.Substring(0, erklärungtextLength), ErklärungTextBox.Text);
             // What the fuck is this code? (If user types longer string then the original, substring fails fix)
 
             ErklärungTextBox.Text = $@"{ErklärungTextBox.Text}
@@ -81,11 +103,12 @@ namespace HistoryMindLernen.Mobile
             AuflösungKnopf.IsVisible = false;
             NeuerBegriffKnopf.Text = "Neuer Begriff";
 
-            int confident = DamerauLevenshtein(Begriff.Erklärung, ErklärungTextBox.Text ?? string.Empty);
+            float confident = DamerauLevenshtein(Begriff.Erklärung, ErklärungTextBox.Text ?? string.Empty);
+            int wrongPercent = (int)(confident / Begriff.Erklärung.Length * 100);
 
             if (confident >= (Begriff.Erklärung.Length / 2))
             {
-                ErklärungTextBox.Text = $@"War nicht so korrekt, Confidence: {confident}%
+                ErklärungTextBox.Text = $@"War nicht korrekt oder es fehlen Wörter. Text vergleich: {wrongPercent}% anders.
 {ErklärungTextBox.Text}
 
 Erwartete Erklärung
@@ -93,16 +116,13 @@ Erwartete Erklärung
             }
             else
             {
-                ErklärungTextBox.Text = $@"Joa passt, Confidence: {confident}%
+                ErklärungTextBox.Text = $@"Ist korrekt. Text vergleich: {wrongPercent}% anders.
 {ErklärungTextBox.Text}
 
 Erwartete Erklärung
 {Begriff.Erklärung}";
                 AddPunkt();
             }
-
-            //this.ErklärungTextBox.("Erwartete Erklärung");
-            //this.ErklärungTextBox.SelectionColor = Color.Yellow;
 
             CheckBegriffe();
         }

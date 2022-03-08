@@ -147,11 +147,12 @@ namespace HistoryMindLernen
             AuflösungKnopf.Visible = false;
             NeuerBegriffKnopf.Text = "Neuer Begriff";
 
-            int confident = DamerauLevenshtein(Begriff!.Erklärung, ErklärungTextBox.Text);
+            float confident = DamerauLevenshtein(Begriff!.Erklärung, ErklärungTextBox.Text);
+            int wrongPercent = (int)(confident / Begriff.Erklärung.Length * 100);
 
-            if (confident >= 50)
+            if (confident >= (Begriff.Erklärung.Length / 2))
             {
-                ErklärungTextBox.Text = @$"War nicht so korrekt, Confidence: {confident}%
+                ErklärungTextBox.Text = @$"War nicht korrekt oder es fehlen Wörter, Text vergleich: {wrongPercent}% anders.
 {ErklärungTextBox.Text}
 
 Erwartete Erklärung
@@ -159,7 +160,7 @@ Erwartete Erklärung
             }
             else
             {
-                ErklärungTextBox.Text = @$"Joa passt, Confidence: {confident}%
+                ErklärungTextBox.Text = @$"Ist korrekt. Text vergleich: {wrongPercent}% anders.
 {ErklärungTextBox.Text}
 
 Erwartete Erklärung
@@ -177,7 +178,7 @@ Erwartete Erklärung
         {
             PrevText = ErklärungTextBox.Text;
 
-            string differenz = Difference(Begriff!.Erklärung, ErklärungTextBox.Text)[..(ErklärungTextBox.Text.Length > Begriff.Erklärung.Length ? Begriff.Erklärung.Length : ErklärungTextBox.Text.Length)];
+            string differenz = Difference(ErklärungTextBox.Text.Length >= Begriff.Erklärung.Length ? Begriff.Erklärung : Begriff.Erklärung.Substring(0, ErklärungTextBox.Text.Length), ErklärungTextBox.Text);
 
             ErklärungTextBox.Text = @$"{ErklärungTextBox.Text}
 {differenz}";

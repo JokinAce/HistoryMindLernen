@@ -20,6 +20,7 @@
 using HistoryMindLernen.Mobile.Database;
 using HistoryMindLernen.Mobile.Droid;
 using Microsoft.Data.Sqlite;
+using System;
 using System.IO;
 using Xamarin.Forms;
 
@@ -32,11 +33,13 @@ namespace HistoryMindLernen.Mobile.Droid
         SqliteConnection ISQLite.GetConnection()
         {
             const string databaseName = "HistoryMind.db";
-            string docFolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            string docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string dbFile = Path.Combine(docFolder, databaseName); // FILE NAME TO USE WHEN COPIED
 
-            FileStream writeStream = new FileStream(dbFile, FileMode.OpenOrCreate, FileAccess.Write);
-            Android.App.Application.Context.Assets.Open(databaseName).CopyTo(writeStream);
+            if (DateTime.UtcNow.Subtract(File.GetLastWriteTimeUtc(dbFile)).TotalDays >= 1) {
+                FileStream writeStream = new FileStream(dbFile, FileMode.OpenOrCreate, FileAccess.Write);
+                Android.App.Application.Context.Assets.Open(databaseName).CopyTo(writeStream);
+            }
 
             return new SqliteConnection($@"Data Source={dbFile};Mode=ReadOnly;");
         }

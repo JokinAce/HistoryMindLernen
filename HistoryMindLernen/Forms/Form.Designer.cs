@@ -56,7 +56,6 @@
             // NeuerBegriffKnopf
             // 
             this.NeuerBegriffKnopf.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(211)))), ((int)(((byte)(105)))));
-            this.NeuerBegriffKnopf.Cursor = System.Windows.Forms.Cursors.Default;
             this.NeuerBegriffKnopf.FlatAppearance.BorderSize = 0;
             this.NeuerBegriffKnopf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NeuerBegriffKnopf.Location = new System.Drawing.Point(278, 481);
@@ -82,7 +81,6 @@
             // AuflösungKnopf
             // 
             this.AuflösungKnopf.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(211)))), ((int)(((byte)(105)))));
-            this.AuflösungKnopf.Cursor = System.Windows.Forms.Cursors.Default;
             this.AuflösungKnopf.FlatAppearance.BorderSize = 0;
             this.AuflösungKnopf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AuflösungKnopf.Location = new System.Drawing.Point(660, 481);
@@ -110,14 +108,13 @@
             // KorregierenKnopf
             // 
             this.KorregierenKnopf.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(211)))), ((int)(((byte)(105)))));
-            this.KorregierenKnopf.Cursor = System.Windows.Forms.Cursors.Default;
             this.KorregierenKnopf.FlatAppearance.BorderSize = 0;
             this.KorregierenKnopf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.KorregierenKnopf.Location = new System.Drawing.Point(471, 481);
             this.KorregierenKnopf.Name = "KorregierenKnopf";
             this.KorregierenKnopf.Size = new System.Drawing.Size(171, 31);
             this.KorregierenKnopf.TabIndex = 5;
-            this.KorregierenKnopf.Text = "Korregieren (Hilfe)";
+            this.KorregierenKnopf.Text = "Korregieren (Halten)";
             this.KorregierenKnopf.UseVisualStyleBackColor = false;
             this.KorregierenKnopf.Visible = false;
             this.KorregierenKnopf.MouseDown += new System.Windows.Forms.MouseEventHandler(this.KorregierenKnopf_MouseDown);
@@ -180,11 +177,12 @@
             // 
             this.TempLabel.AutoSize = true;
             this.TempLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.TempLabel.Location = new System.Drawing.Point(722, 560);
+            this.TempLabel.Location = new System.Drawing.Point(551, 560);
             this.TempLabel.Name = "TempLabel";
-            this.TempLabel.Size = new System.Drawing.Size(380, 15);
+            this.TempLabel.Size = new System.Drawing.Size(489, 15);
             this.TempLabel.TabIndex = 3;
-            this.TempLabel.Text = "BETA | Alles was man sieht oder macht kann sich in der Zukunft ändern";
+            this.TempLabel.Text = "BETA | Ansicht und Features können sich in Zukunft ändern | Copyright © 2022 Fran" +
+    "tisek Pis";
             // 
             // Form
             // 
@@ -200,6 +198,8 @@
             this.Controls.Add(this.ErklärungTextBox);
             this.Controls.Add(this.NeuerBegriffKnopf);
             this.Controls.Add(this.BegriffLabel);
+            this.MaximumSize = new System.Drawing.Size(1130, 623);
+            this.MinimumSize = new System.Drawing.Size(1130, 623);
             this.Name = "Form";
             this.Text = "Geschichte | History Mind lernen leicht gemacht";
             this.HistoryMindGroupBox.ResumeLayout(false);
