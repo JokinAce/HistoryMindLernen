@@ -36,7 +36,7 @@ namespace HistoryMindLernen.Mobile.Droid
             string docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string dbFile = Path.Combine(docFolder, databaseName); // FILE NAME TO USE WHEN COPIED
 
-            if (DateTime.UtcNow.Subtract(File.GetLastWriteTimeUtc(dbFile)).TotalDays >= 1) {
+            if (!File.Exists(dbFile) || DateTime.UtcNow.Subtract(File.GetLastWriteTimeUtc(dbFile)).TotalDays >= 1) {
                 FileStream writeStream = new FileStream(dbFile, FileMode.OpenOrCreate, FileAccess.Write);
                 Android.App.Application.Context.Assets.Open(databaseName).CopyTo(writeStream);
             }
